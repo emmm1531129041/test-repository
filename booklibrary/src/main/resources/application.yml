@@ -1,0 +1,22 @@
+# Spring Boot 核心配置
+spring:
+  # 应用名称（在日志、注册中心中显示）
+  application:
+    name: book_library
+  # 数据源配置
+  datasource:
+    url: JDBC:mysql://127.0.0.1:3306/book_test?characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# MyBatis 配置
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true  # 开启驼峰命名自动映射
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 控制台打印 SQL
+
+# 日志文件配置
+logging:
+  file:
+    name: spring-book.log  # 日志输出文件名
