@@ -40,13 +40,27 @@
             return;
         }
 
-        // 前端写死登录验证
-        if (name == "admin" && password == "123456") {
-            alert("登录成功");
-            location.href = "book_list.html";
-        } else {
-            alert("账号或密码不正确");
-        }
+        // 调用后端接口
+        $.ajax({
+            url: "/user/login",
+            type: "GET",
+            data: {
+                name: name,
+                password: password
+            },
+            dataType: "json",
+            success: function(result) {
+                if (result === true) {
+                    alert("登录成功");
+                    location.href = "book_list.html";
+                } else {
+                    alert("账号或密码不正确");
+                }
+            },
+            error: function() {
+                alert("网络错误，请稍后重试");
+            }
+        });
     }
 </script>
 </body>

@@ -17,9 +17,9 @@ public class BookService {
         List<BookInfo> bookInfos = bookDao.mockBookData();
         for (BookInfo bookInfo : bookInfos) {
             if (bookInfo.getStatus() == 1) {
-                bookInfo.setStatusCN("可借阅");
+                bookInfo.setStatus(1);
             } else {
-                bookInfo.setStatusCN("不可借阅");
+                bookInfo.setStatus(0);
             }
         }
         return bookInfos;
