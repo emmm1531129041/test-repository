@@ -24,4 +24,9 @@ public class BookService {
         }
         return bookInfos;
     }
+
+    public void addBook(){
+
+    }
+
 }
