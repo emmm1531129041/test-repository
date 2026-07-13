@@ -21,7 +21,8 @@ public class BookInfo {
     // 出版社
     private String publish;
     // 状态 0 - 无效 1 - 允许借阅 2 - 不允许借阅
-    private Integer status;
+    private Integer status;      // 状态码：0、1、2
+    private String statusCN;     // 状态中文名："可借阅"
     //创建时间
     private Date createTime;
     //更新时间

@@ -54,19 +54,30 @@
         </div>
     </form>
 </div>
+
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script>
     function add() {
-        // 简单表单校验
+        // 前端简单校验（可选）
         var bookName = $("#bookName").val();
         if (bookName == "") {
             alert("图书名称不能为空");
             return;
         }
 
-        // 模拟添加成功
-        alert("图书添加成功（模拟）");
-        location.href = "book_list.html";
+        $.ajax({
+            type: "post",
+            url: "/book/addBook",
+            data: $("#addBook").serialize(),
+            success: function(result) {
+                if (result === "") {
+                    alert("图书添加成功");
+                    location.href = "book_list.html";
+                } else {
+                    alert(result);
+                }
+            }
+        });
     }
 </script>
 </body>
