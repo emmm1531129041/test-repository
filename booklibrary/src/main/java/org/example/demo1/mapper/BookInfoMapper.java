@@ -22,8 +22,11 @@ public interface BookInfoMapper {
 //    @Select("select * from book_info where status<>0 limit #{offset}, #{limit}")
 //    List<BookInfo> getListByPage(Integer offset, Integer limit);
 
-    // 简化版Mapper（直接传入PageRequest对象）
-    @Select("select * from book_info limit #{(currentPage-1)*pageSize}, #{pageSize}")
+    @Select("""
+select *
+from book_info
+where status <> 0
+limit #{offset}, #{pageSize}
+""")
     List<BookInfo> getListByPage(PageRequest pageRequest);
-
 }

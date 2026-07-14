@@ -20,18 +20,15 @@ public class BookController {
     //Controller调用Service层
     @Autowired
     private BookService bookService;
-    @Autowired
-    private PageRequest pageRequest;
 
-    //Service调用dao层
-    @RequestMapping("/getList")
-    public List<BookInfo> getList() {
-        return bookService.getList();
-    }
+//    //Service调用dao层
+//    @RequestMapping("/getList")
+//    public List<BookInfo> getList() {
+//        return bookService.getList();
+//    }
 
     @GetMapping("/getListByPage")
-    public PageResponse<BookInfo> getListByPage(){
-        // 调用Service层分页查询
+    public PageResponse<BookInfo> getListByPage(PageRequest pageRequest) {
         return bookService.getListByPage(pageRequest);
     }
 
