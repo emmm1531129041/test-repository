@@ -1,5 +1,8 @@
 package org.example.demo1.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum BookStatus {
     DELETED(0, "无效"),
     NORMAL(1, "可借阅"),

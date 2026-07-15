@@ -3,7 +3,7 @@ package org.example.demo1.service;
 import org.example.demo1.enums.BookStatus;
 import org.example.demo1.mapper.BookInfoMapper;
 import org.example.demo1.model.BookInfo;
-import org.example.demo1.dao.BookDao;
+//import org.example.demo1.dao.BookDao;
 import org.example.demo1.model.PageRequest;
 import org.example.demo1.model.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,4 +66,25 @@ public class BookService {
         return new PageResponse<>(count,bookInfos);
     }
 
+    public BookInfo queryBookById(Integer bookId) {
+    return bookInfoMapper.queryBookById(bookId);
+    }
+
+    public Integer updateBook(BookInfo bookInfo) {
+    return bookInfoMapper.updateBook(bookInfo);
+    }
+
+    public Integer deleteBook(Integer bookId) {
+        BookInfo bookInfo = new BookInfo();
+
+        bookInfo.setId(bookId);
+
+        bookInfo.setStatus(BookStatus.DELETED.getCode());
+
+        return bookInfoMapper.updateBook(bookInfo);
+    }
+
+    public Integer batchDelete(List<Integer> ids) {
+    return bookInfoMapper.batchDelete(ids);
+    }
 }

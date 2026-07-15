@@ -1,28 +1,23 @@
-# Spring Boot 核心配置
 spring:
-  # 应用名称
   application:
     name: book_library
-  # 数据源配置
   datasource:
     url: jdbc:mysql://localhost:3306/book_test?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-# MyBatis 配置
 mybatis:
+  mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-# 日志配置
 logging:
   file:
     name: spring-book.log
   level:
     org.example.demo1.dao: debug
 
-# 服务器配置
 server:
   port: 8080
