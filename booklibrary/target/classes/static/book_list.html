@@ -63,78 +63,74 @@
     </div>
 
 </div>
-
 <script>
 
-    // 当前页
-    let currentPage = 1;
+    let currentPage=1;
+    const pageSize=10;
 
-    // 每页条数
-    const pageSize = 10;
-
-    // 页面初始化
     getBookList(currentPage);
 
-    function getBookList(page) {
+    function getBookList(page){
 
         $.ajax({
 
-            type: "GET",
+            type:"GET",
 
-            url: "/book/getListByPage",
+            url:"/book/getListByPage",
 
-            data: {
-                currentPage: page,
-                pageSize: pageSize
+            data:{
+                currentPage:page,
+                pageSize:pageSize
             },
 
-            success: function (result) {
+            success:function(result){
 
-                if (result == null) {
+                if(result==null){
                     return;
                 }
 
-                let books = result.records;
-                let total = result.total;
+                let books=result.records;
+                let total=result.total;
 
-                let html = "";
+                let html="";
 
-                if (books != null) {
+                if(books!=null){
 
-                    for (let book of books) {
+                    for(let book of books){
 
-                        html += "<tr>";
+                        html+="<tr>";
 
-                        html += "<td>";
-                        html += "<input type='checkbox' class='book-select' name='selectBook' value='" + book.id + "'>";
-                        html += "</td>";
+                        html+="<td><input type='checkbox' name='selectBook' value='"+book.id+"'></td>";
 
-                        html += "<td>" + book.id + "</td>";
+                        html+="<td>"+book.id+"</td>";
 
-                        html += "<td>" + book.bookName + "</td>";
+                        html+="<td>"+book.bookName+"</td>";
 
-                        html += "<td>" + book.author + "</td>";
+                        html+="<td>"+book.author+"</td>";
 
-                        html += "<td>" + book.count + "</td>";
+                        html+="<td>"+book.count+"</td>";
 
-                        html += "<td>" + book.price + "</td>";
+                        html+="<td>"+book.price+"</td>";
 
-                        html += "<td>" + book.publish + "</td>";
+                        html+="<td>"+book.publish+"</td>";
 
-                        // 后端已经转换好了中文状态
-                        html += "<td>" + book.statusCN + "</td>";
+                        html+="<td>"+book.statusCN+"</td>";
 
-                        html += "<td>";
-                        html += "<div class='op'>";
+                        html+="<td>";
 
-                        html += "<a href='book_update.html?bookId=" + book.id + "'>修改</a>";
+                        html+="<div class='op'>";
 
-                        html += "<a href='javascript:void(0)' onclick='deleteBook(" + book.id + ")'>删除</a>";
+                        html+="<a href='book_update.html?bookId="+book.id+"'>修改</a>";
 
-                        html += "</div>";
-                        html += "</td>";
+                        html+="&nbsp;&nbsp;";
 
-                        html += "</tr>";
+                        html+="<a href='javascript:void(0)' onclick='deleteBook("+book.id+")'>删除</a>";
+
+                        html+="</div>";
+
+                        html+="</td>";
+
+                        html+="</tr>";
 
                     }
 
@@ -142,32 +138,31 @@
 
                 $("#bookTableBody").html(html);
 
-                // 第一次加载分页器
                 $("#pageContainer").jqPaginator({
 
-                    totalCounts: total,
+                    totalCounts:total,
 
-                    pageSize: pageSize,
+                    pageSize:pageSize,
 
-                    visiblePages: 5,
+                    visiblePages:5,
 
-                    currentPage: page,
+                    currentPage:page,
 
-                    first: '<li class="page-item"><a class="page-link">首页</a></li>',
+                    first:'<li class="page-item"><a class="page-link">首页</a></li>',
 
-                    prev: '<li class="page-item"><a class="page-link">上一页</a></li>',
+                    prev:'<li class="page-item"><a class="page-link">上一页</a></li>',
 
-                    next: '<li class="page-item"><a class="page-link">下一页</a></li>',
+                    next:'<li class="page-item"><a class="page-link">下一页</a></li>',
 
-                    last: '<li class="page-item"><a class="page-link">尾页</a></li>',
+                    last:'<li class="page-item"><a class="page-link">尾页</a></li>',
 
-                    page: '<li class="page-item"><a class="page-link">{{page}}</a></li>',
+                    page:'<li class="page-item"><a class="page-link">{{page}}</a></li>',
 
-                    onPageChange: function (num, type) {
+                    onPageChange:function(num,type){
 
-                        if (type === "change") {
+                        if(type=="change"){
 
-                            currentPage = num;
+                            currentPage=num;
 
                             getBookList(num);
 
@@ -179,7 +174,7 @@
 
             },
 
-            error: function () {
+            error:function(){
 
                 alert("获取图书列表失败！");
 
@@ -189,38 +184,62 @@
 
     }
 
-    // 删除（目前还是模拟）
-    function deleteBook(id) {
-
-        if (confirm("确认删除图书吗？")) {
-
-            alert("删除接口还没有写，当前只是模拟。");
-
+    function deleteBook(bookId){
+        if(!confirm("确认删除该图书吗？")){
+            return;
         }
+        $.ajax({
+            type:"POST",
+            url:"/book/deleteBook",
+            data:{
+                bookId:bookId
+            },
 
+            success:function(result){
+                if(result==""){
+                    alert("删除成功！");
+                    getBookList(currentPage);
+                }else{
+                    alert(result);
+                }
+            },
+            error:function(){
+                alert("删除失败，请稍后重试！");
+            }
+        });
     }
 
-    // 批量删除（目前还是模拟）
-    function batchDelete() {
-
-        let ids = [];
-
-        $("input[name='selectBook']:checked").each(function () {
-
+    function batchDelete(){
+        let ids=[];
+        $("input[name='selectBook']:checked").each(function(){
             ids.push($(this).val());
-
         });
-
-        if (ids.length === 0) {
-
-            alert("请选择要删除的图书");
-
+        if(ids.length==0){
+            alert("请选择要删除的图书！");
             return;
-
         }
-
-        alert("批量删除接口还没有写。\n选中了：" + ids.join(","));
-
+        if(!confirm("确认删除选中的图书吗？")){
+            return;
+        }
+        $.ajax({
+            type:"POST",
+            url:"/book/batchBook",
+            traditional:true,
+            data:{
+                ids:ids
+            },
+            success:function(result){
+                if(result==""){
+                    alert("批量删除成功！");
+                    getBookList(currentPage);
+                }else{
+                    alert(result);
+                }
+            },
+            error:function(){
+                alert("批量删除失败！");
+            }
+        });
     }
 
 </script>
