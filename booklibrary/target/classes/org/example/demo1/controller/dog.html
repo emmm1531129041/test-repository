@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>捂鼻子小狗 · 动态表情</title>
+    <style>
+        /* 全局设置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background: #1a1a2e; /* 深色背景衬托可爱 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .container {
+            background: #f9f3e6;
+            padding: 2rem 3rem 3rem 3rem;
+            border-radius: 60px 60px 40px 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        /* 小狗“演员”舞台 */
+        .dog-stage {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 20px;
+            min-height: 200px;
+            margin-bottom: 10px;
+        }
+
+        /* 通用狗头 */
+        .dog {
+            font-size: 100px;          /* 控制 emoji 大小 */
+            line-height: 1;
+            display: inline-block;
+            transform-origin: center bottom;
+        }
+
+        /* ---- 捂鼻狗：被臭味袭击 ---- */
+        .dog-sniff {
+            animation: sniffReact 1.8s ease-in-out infinite;
+        }
+        /* 捂鼻子的嫌弃反应：轻微后退 + 皱眉（用缩放模拟） */
+        @keyframes sniffReact {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(0.95) rotate(-3deg); }   /* 闻到，后退 */
+            50% { transform: scale(0.9) rotate(2deg); }     /* 捂鼻，嫌弃 */
+            75% { transform: scale(0.95) rotate(-1deg); }
+        }
+
+        /* ---- 摆手狗：疯狂扇空气 ---- */
+        .dog-wave {
+            animation: waveHand 0.7s ease-in-out infinite alternate;
+            transform-origin: 80% 20%;   /* 以“手”的位置为中心摆动，更像摆手 */
+        }
+        /* 摆手动画：利用 rotate 和 位移 模拟扇风 */
+        @keyframes waveHand {
+            0% { transform: rotate(-8deg) scale(0.95); }
+            100% { transform: rotate(12deg) scale(1.05); }
+        }
+
+        /* 标题文案 */
+        .title {
+            margin-top: 10px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4a3728;
+            letter-spacing: 2px;
+        }
+        .sub {
+            color: #8b7355;
+            font-size: 1rem;
+            margin-top: -5px;
+            letter-spacing: 4px;
+        }
+        .footnote {
+            margin-top: 20px;
+            color: #b8a58a;
+            font-size: 0.85rem;
+            border-top: 1px dashed #dacfbc;
+            padding-top: 16px;
+        }
+        /* 响应式小屏 */
+        @media (max-width: 480px) {
+            .container { padding: 1.5rem; }
+            .dog { font-size: 70px; }
+            .title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 两只小狗同时“表演” -->
+    <div class="dog-stage">
+        <!-- 1. 捂鼻子狗狗 -->
+        <span class="dog dog-sniff">🐶</span>
+        <!-- 2. 摆手狗狗（主要表现摆手） -->
+        <span class="dog dog-wave">🐕</span>
+    </div>
+
+    <div class="title">🙊 好臭！</div>
+    <div class="sub">—— 扇走！扇走！ ——</div>
+    <div class="footnote">
+        ⏳ 循环动画 · 捂鼻子 & 摆手
+    </div>
+</div>
+
+</body>
+</html>
