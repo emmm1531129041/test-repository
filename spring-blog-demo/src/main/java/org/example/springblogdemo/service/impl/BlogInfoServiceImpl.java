@@ -1,9 +1,9 @@
-package generator.service.impl;
+package org.example.springblogdemo.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import generator.domain.BlogInfo;
+import org.example.springblogdemo.pojo.dataobject.BlogInfo;
 import generator.service.BlogInfoService;
-import generator.mapper.BlogInfoMapper;
+import org.example.springblogdemo.mapper.BlogInfoMapper;
 import org.springframework.stereotype.Service;
 
 /**
