@@ -1,5 +1,6 @@
 package org.example.springblogdemo.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.example.springblogdemo.pojo.dataobject.BlogInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2026-07-19 17:36:18
 * @Entity org.example.springblogdemo.pojo.dataobject.BlogInfo
 */
+@Mapper
 public interface BlogInfoMapper extends BaseMapper<BlogInfo> {
 
 }

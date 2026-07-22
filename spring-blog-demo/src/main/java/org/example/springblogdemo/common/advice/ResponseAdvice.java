@@ -1,4 +1,6 @@
 package org.example.springblogdemo.common.advice;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Nullable;
 import org.example.springblogdemo.pojo.response.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-import tools.jackson.databind.ObjectMapper;
+
 
 @ControllerAdvice
 public class ResponseAdvice implements ResponseBodyAdvice {
@@ -26,7 +28,11 @@ public class ResponseAdvice implements ResponseBodyAdvice {
             return body;
         }
         if (body instanceof String){
-            return objectMapper.writeValueAsString(Result.ok(body));
+            try {
+                return objectMapper.writeValueAsString(Result.ok(body));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }
         return Result.ok(body);
     }

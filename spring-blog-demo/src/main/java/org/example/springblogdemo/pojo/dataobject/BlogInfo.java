@@ -20,32 +20,26 @@ public class BlogInfo {
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
-
     /**
      * 
      */
     private String title;
-
     /**
      * 
      */
     private String content;
-
     /**
      * 
      */
     private Integer userId;
-
     /**
      * 
      */
     private Integer deleteFlag;
-
     /**
      * 
      */
     private Date createTime;
-
     /**
      * 
      */
