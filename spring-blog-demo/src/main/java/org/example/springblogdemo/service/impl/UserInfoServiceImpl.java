@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.springblogdemo.common.Constants;
 import org.example.springblogdemo.common.exception.BlogException;
 import org.example.springblogdemo.common.util.BeanTrans;
+import org.example.springblogdemo.common.util.JwtUtils;
 import org.example.springblogdemo.mapper.BlogInfoMapper;
 import org.example.springblogdemo.pojo.dataobject.BlogInfo;
 import org.example.springblogdemo.pojo.dataobject.UserInfo;
@@ -53,20 +54,19 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
         if (userInfo==null || userInfo.getId()==null){
             throw new BlogException("用户不存在");
         }
-//        if (!request.getPassword().equals(userInfo.getPassword())){
-//            throw new BlogException("密码不正确");
-//        }
+        if (!request.getPassword().equals(userInfo.getPassword())){
+            throw new BlogException("密码不正确");
+        }
 //        if (!SecurityUtils.verify(request.getPassword(), userInfo.getPassword())){
 //            throw new BlogException("密码不正确");
 //        }
-//        //账号密码正确
-//        Map<String, Object> claim = new HashMap<>();
-//        claim.put("id", userInfo.getId());
-//        claim.put("name", userInfo.getUserName());
-//
-//        String token = JwtUtils.genJwt(claim);
-//        return new UserLoginResponse(userInfo.getId(), token);
-        return null;
+        //账号密码正确
+        Map<String, Object> claim = new HashMap<>();
+        claim.put("id", userInfo.getId());
+        claim.put("name", userInfo.getUserName());
+
+        String token = JwtUtils.genJwt(claim);
+        return new UserLoginResponse(userInfo.getId(), token);
     }
 
     @Override
@@ -94,7 +94,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
      * @return
      */
     public UserInfo getUserInfoById(Integer userId){
-        LambdaQueryWrapper wrapper = new LambdaQueryWrapper<UserInfo>().eq(UserInfo::getId, userId)
+        LambdaQueryWrapper wrapper =
+                new LambdaQueryWrapper<UserInfo>()
+                .eq(UserInfo::getId, userId)
                 .eq(UserInfo::getDeleteFlag, Constants.NOT_DELETE);
         return userInfoMapper.selectOne(wrapper);
     }

@@ -56,6 +56,7 @@ public class BlogInfoServiceImpl extends ServiceImpl<BlogInfoMapper, BlogInfo>
     @Override
     public Boolean addBlog(AddBlogInfoRequest addBlogInfoRequest) {
         BlogInfo blogInfo = BeanTrans.trans(addBlogInfoRequest);
+
         try {
             blogInfoMapper.insert(blogInfo);
             return true;
